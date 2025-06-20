@@ -1,0 +1,8 @@
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/bin/Debug/net9.0/CoverletSourceRootsMapping_EventPlatform.API.Tests
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.csproj.AssemblyReference.cache
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/MvcTestingAppManifest.json
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.AssemblyInfoInputs.cache
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.AssemblyInfo.cs
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.csproj.CoreCompileInputs.cache
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API.Tests/obj/Debug/net9.0/EventPlatform.API.Tests.sourcelink.json

@@ -1,318 +1,422 @@
-# 🎉 Event Platform API
+# EventPlatform API
 
-API completa para la gestión de eventos con documentación interactiva de Swagger.
+A modern .NET 9 Web API for event management with Entity Framework Core and MySQL.
 
-## 🚀 Características
+## 🚀 Features
 
-- ✅ **CRUD completo** de eventos
-- ✅ **Filtros avanzados** por título, ubicación y fechas
-- ✅ **Generación automática** de descripciones con IA
-- ✅ **Documentación interactiva** con Swagger UI
-- ✅ **Validaciones robustas** con mensajes de error claros
-- ✅ **Base de datos MySQL** con Entity Framework Core
-- ✅ **CORS configurado** para aplicaciones frontend
+### 🎯 Core Features
+- **RESTful API**: Complete CRUD operations for events
+- **Advanced Filtering**: Filter events by title, location, and date ranges
+- **AI-Powered Descriptions**: Generate event descriptions using AI
+- **Real-time Status Management**: Update event status with immediate response
+- **Comprehensive Validation**: Server-side validation with clear error messages
 
-## 📋 Requisitos Previos
+### 🔧 Technical Features
+- **Entity Framework Core**: Modern ORM with code-first approach
+- **MySQL Database**: Reliable and scalable database solution
+- **Swagger Documentation**: Interactive API documentation
+- **CORS Support**: Cross-origin resource sharing for frontend integration
+- **Standardized Responses**: Consistent API response format
 
-- .NET 9.0 SDK
-- MySQL Server
-- Visual Studio Code o Visual Studio
+## 🛠️ Technology Stack
 
-## 🛠️ Instalación
+- **Framework**: .NET 9 Web API
+- **ORM**: Entity Framework Core 9
+- **Database**: MySQL 8.0+
+- **Documentation**: Swagger/OpenAPI 3.0
+- **Validation**: Data Annotations and Fluent Validation
+- **Logging**: Built-in .NET logging
 
-### 1. Clonar el repositorio
-```bash
-git clone <repository-url>
-cd EventPlatform.API
+## 📁 Project Structure
+
+```
+EventPlatform.API/
+├── Controllers/
+│   └── EventsController.cs          # Main API controller
+├── Data/
+│   └── ApplicationDbContext.cs      # Entity Framework context
+├── Models/
+│   ├── Event.cs                     # Event entity model
+│   └── ApiResponse.cs               # Standardized response model
+├── Program.cs                       # Application entry point
+├── appsettings.json                 # Configuration
+└── EventPlatform.API.csproj         # Project file
 ```
 
-### 2. Configurar la base de datos
-Ejecuta el script SQL en tu servidor MySQL:
-```sql
--- Crear la base de datos
-CREATE DATABASE IF NOT EXISTS TodoAppDb;
-USE TodoAppDb;
+## 🚀 Getting Started
 
--- Crear la tabla Events
-CREATE TABLE IF NOT EXISTS `Events` (
+### Prerequisites
+
+- **.NET 9 SDK**
+- **MySQL 8.0+**
+- **Visual Studio Code** or **Visual Studio**
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd EventPlatform.API
+   ```
+
+2. **Configure the database**
+   ```bash
+   # Create MySQL database
+   mysql -u root -p
+   CREATE DATABASE eventplatform;
+   USE eventplatform;
+   
+   # Run the setup script
+   mysql -u root -p eventplatform < ../database_setup.sql
+   ```
+
+3. **Configure connection string**
+   ```json
+   // appsettings.json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=localhost;Database=eventplatform;User=your_user;Password=your_password;"
+     }
+   }
+   ```
+
+4. **Run the application**
+   ```bash
+   dotnet restore
+   dotnet run
+   ```
+
+5. **Access the API**
+   - API Base URL: `http://localhost:5130`
+   - Swagger UI: `http://localhost:5130/swagger`
+
+## 📚 API Documentation
+
+### Base URL
+```
+http://localhost:5130/api/events
+```
+
+### Endpoints
+
+#### GET /api/events
+Get all events with optional filtering
+
+**Query Parameters**:
+- `title` (string, optional): Filter by title
+- `location` (string, optional): Filter by location
+- `dateFrom` (date, optional): Filter from date
+- `dateTo` (date, optional): Filter to date
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Events retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "title": "Event Title",
+      "dateTime": "2024-01-15T10:00:00.000Z",
+      "location": "Event Location",
+      "description": "Event description",
+      "status": 0,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": null
+    }
+  ]
+}
+```
+
+#### GET /api/events/{id}
+Get a specific event by ID
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Event retrieved successfully",
+  "data": {
+    "id": 1,
+    "title": "Event Title",
+    "dateTime": "2024-01-15T10:00:00.000Z",
+    "location": "Event Location",
+    "description": "Event description",
+    "status": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": null
+  }
+}
+```
+
+#### POST /api/events
+Create a new event
+
+**Request Body**:
+```json
+{
+  "title": "Event Title",
+  "dateTime": "2024-01-15T10:00:00.000Z",
+  "location": "Event Location",
+  "description": "Event description",
+  "status": 0
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Event created successfully",
+  "data": {
+    "id": 1,
+    "title": "Event Title",
+    "dateTime": "2024-01-15T10:00:00.000Z",
+    "location": "Event Location",
+    "description": "Event description",
+    "status": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": null
+  }
+}
+```
+
+#### PUT /api/events/{id}
+Update an existing event
+
+**Request Body**:
+```json
+{
+  "id": 1,
+  "title": "Updated Title",
+  "dateTime": "2024-01-15T10:00:00.000Z",
+  "location": "Updated Location",
+  "description": "Updated description",
+  "status": 1
+}
+```
+
+#### PATCH /api/events/{id}/status
+Update event status
+
+**Request Body**:
+```json
+{
+  "status": 1
+}
+```
+
+#### DELETE /api/events/{id}
+Delete an event
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Event deleted successfully",
+  "data": null
+}
+```
+
+#### POST /api/events/generate-description
+Generate AI-powered description
+
+**Request Body**:
+```json
+{
+  "topic": "Event topic"
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Description generated successfully",
+  "data": "Generated description text"
+}
+```
+
+### Event Status Values
+- `0`: Upcoming
+- `1`: Attending
+- `2`: Maybe
+- `3`: Declined
+
+### HTTP Status Codes
+- `200`: OK - Operation successful
+- `201`: Created - Resource created successfully
+- `204`: No Content - Operation successful without content
+- `400`: Bad Request - Invalid data
+- `404`: Not Found - Resource not found
+- `500`: Internal Server Error - Server error
+
+## 🗄️ Database Schema
+
+### Events Table
+```sql
+CREATE TABLE `Events` (
     `Id` int NOT NULL AUTO_INCREMENT,
     `Title` varchar(100) NOT NULL,
     `DateTime` datetime(6) NOT NULL,
     `Location` varchar(200) NOT NULL,
     `Description` varchar(1000) NULL,
-    `Status` varchar(20) NOT NULL,
+    `Status` int NOT NULL,
     `CreatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `UpdatedAt` datetime(6) NULL,
     PRIMARY KEY (`Id`)
 );
 ```
 
-### 3. Configurar la conexión
-Edita `EventPlatform.API/appsettings.json`:
+## 🔧 Configuration
+
+### appsettings.json
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;port=3306;database=TodoAppDb;user=root;password=tu_password"
-  }
+    "DefaultConnection": "Server=localhost;Database=eventplatform;User=your_user;Password=your_password;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
 }
 ```
 
-### 4. Ejecutar la aplicación
+### CORS Configuration
+```csharp
+// Program.cs
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+```
+
+## 🧪 Testing
+
+### Unit Tests
 ```bash
+dotnet test
+```
+
+### Integration Tests
+```bash
+dotnet test --filter "Category=Integration"
+```
+
+### API Testing with Swagger
+1. Navigate to `http://localhost:5130/swagger`
+2. Use the interactive documentation to test endpoints
+3. View request/response examples
+
+## 📦 Deployment
+
+### Build for Production
+```bash
+dotnet publish -c Release -o ./publish
+```
+
+### Docker Deployment
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY ["EventPlatform.API/EventPlatform.API.csproj", "EventPlatform.API/"]
+RUN dotnet restore "EventPlatform.API/EventPlatform.API.csproj"
+COPY . .
+WORKDIR "/src/EventPlatform.API"
+RUN dotnet build "EventPlatform.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "EventPlatform.API.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "EventPlatform.API.dll"]
+```
+
+### Environment Variables
+```bash
+# Production environment variables
+export ASPNETCORE_ENVIRONMENT=Production
+export ConnectionStrings__DefaultConnection="your_production_connection_string"
+```
+
+## 🔍 Development
+
+### Code Style
+- **C# Coding Conventions**: Follow Microsoft C# coding conventions
+- **SOLID Principles**: Apply SOLID design principles
+- **Clean Architecture**: Separate concerns and dependencies
+- **Async/Await**: Use async programming patterns
+
+### Database Migrations
+```bash
+# Add migration
+dotnet ef migrations add InitialCreate
+
+# Update database
+dotnet ef database update
+```
+
+### Logging
+```csharp
+// Use structured logging
+_logger.LogInformation("Event {EventId} created successfully", event.Id);
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### Database Connection
+- Verify MySQL service is running
+- Check connection string format
+- Ensure database exists
+
+#### CORS Issues
+- Verify CORS policy configuration
+- Check frontend origin in CORS settings
+
+#### Build Errors
+```bash
+dotnet clean
 dotnet restore
 dotnet build
-dotnet run --project EventPlatform.API
 ```
 
-## 🌐 Acceso a la API
+## 📚 Resources
 
-- **API Base URL:** http://localhost:5130
-- **Swagger UI:** http://localhost:5130/swagger
-- **OpenAPI JSON:** http://localhost:5130/openapi.json
+- [.NET 9 Documentation](https://learn.microsoft.com/en-us/dotnet/)
+- [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+- [ASP.NET Core Web API](https://learn.microsoft.com/en-us/aspnet/core/web-api/)
+- [Swagger Documentation](https://swagger.io/docs/)
 
-## 📚 Endpoints Disponibles
+## 🤝 Contributing
 
-### 🔍 GET /api/events
-Obtiene todos los eventos con filtros opcionales.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-**Parámetros de consulta:**
-- `title` (opcional): Filtrar por título
-- `location` (opcional): Filtrar por ubicación
-- `dateFrom` (opcional): Filtrar desde fecha
-- `dateTo` (opcional): Filtrar hasta fecha
+## 📝 License
 
-**Ejemplo:**
-```bash
-curl "http://localhost:5130/api/events?title=conferencia&dateFrom=2025-07-01"
-```
-
-### 🔍 GET /api/events/{id}
-Obtiene un evento específico por ID.
-
-**Ejemplo:**
-```bash
-curl http://localhost:5130/api/events/1
-```
-
-### ➕ POST /api/events
-Crea un nuevo evento.
-
-**Request Body:**
-```json
-{
-  "title": "Conferencia de Inteligencia Artificial 2024",
-  "dateTime": "2025-07-15T14:00:00",
-  "location": "Centro de Convenciones - Auditorio Principal",
-  "description": "Una conferencia emocionante sobre las últimas tendencias en IA y machine learning.",
-  "status": 0
-}
-```
-
-**Ejemplo:**
-```bash
-curl -X POST http://localhost:5130/api/events \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Conferencia de Inteligencia Artificial 2024",
-    "dateTime": "2025-07-15T14:00:00",
-    "location": "Centro de Convenciones - Auditorio Principal",
-    "description": "Una conferencia emocionante sobre las últimas tendencias en IA y machine learning.",
-    "status": 0
-  }'
-```
-
-### ✏️ PUT /api/events/{id}
-Actualiza un evento existente.
-
-**Request Body:**
-```json
-{
-  "id": 1,
-  "title": "Conferencia de Tecnología 2024 - Actualizada",
-  "dateTime": "2025-07-15T15:30:00",
-  "location": "Centro de Convenciones - Sala A",
-  "description": "Una conferencia actualizada sobre las últimas tendencias en tecnología.",
-  "status": 1
-}
-```
-
-**Ejemplo:**
-```bash
-curl -X PUT http://localhost:5130/api/events/1 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "id": 1,
-    "title": "Conferencia de Tecnología 2024 - Actualizada",
-    "dateTime": "2025-07-15T15:30:00",
-    "location": "Centro de Convenciones - Sala A",
-    "description": "Una conferencia actualizada sobre las últimas tendencias en tecnología.",
-    "status": 1
-  }'
-```
-
-### 🔄 PATCH /api/events/{id}/status
-Actualiza solo el estado de un evento.
-
-**Request Body:**
-```json
-{
-  "status": 2
-}
-```
-
-**Ejemplo:**
-```bash
-curl -X PATCH http://localhost:5130/api/events/1/status \
-  -H "Content-Type: application/json" \
-  -d '{"status": 2}'
-```
-
-### 🗑️ DELETE /api/events/{id}
-Elimina un evento.
-
-**Ejemplo:**
-```bash
-curl -X DELETE http://localhost:5130/api/events/1
-```
-
-### 🤖 POST /api/events/generate-description
-Genera una descripción automática para un evento.
-
-**Request Body:**
-```json
-{
-  "topic": "Desarrollo Web Moderno"
-}
-```
-
-**Ejemplo:**
-```bash
-curl -X POST http://localhost:5130/api/events/generate-description \
-  -H "Content-Type: application/json" \
-  -d '{"topic": "Desarrollo Web Moderno"}'
-```
-
-## 📊 Códigos de Estado de Eventos
-
-| Código | Estado | Descripción |
-|--------|--------|-------------|
-| 0 | Upcoming | Evento próximo |
-| 1 | Attending | Asistiendo al evento |
-| 2 | Maybe | Tal vez asistir |
-| 3 | Declined | Rechazado |
-
-## 🔧 Códigos de Respuesta HTTP
-
-| Código | Descripción |
-|--------|-------------|
-| 200 | OK - Operación exitosa |
-| 201 | Created - Recurso creado |
-| 204 | No Content - Operación exitosa sin contenido |
-| 400 | Bad Request - Datos inválidos |
-| 404 | Not Found - Recurso no encontrado |
-| 500 | Internal Server Error - Error del servidor |
-
-## 🛡️ Validaciones
-
-La API incluye validaciones robustas:
-
-- **Título:** Requerido, máximo 100 caracteres
-- **Fecha y hora:** Requerido, formato ISO 8601
-- **Ubicación:** Requerido, máximo 200 caracteres
-- **Descripción:** Opcional, máximo 1000 caracteres
-- **Estado:** Requerido, valores válidos: 0, 1, 2, 3
-
-## 🎯 Ejemplos de Uso Completos
-
-### Crear y gestionar eventos
-```bash
-# 1. Crear un evento
-curl -X POST http://localhost:5130/api/events \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Workshop de Angular",
-    "dateTime": "2025-07-20T10:00:00",
-    "location": "Universidad Local",
-    "description": "Taller práctico sobre Angular 17+",
-    "status": 0
-  }'
-
-# 2. Obtener todos los eventos
-curl http://localhost:5130/api/events
-
-# 3. Actualizar el estado
-curl -X PATCH http://localhost:5130/api/events/1/status \
-  -H "Content-Type: application/json" \
-  -d '{"status": 1}'
-
-# 4. Generar descripción automática
-curl -X POST http://localhost:5130/api/events/generate-description \
-  -H "Content-Type: application/json" \
-  -d '{"topic": "Machine Learning"}'
-```
-
-## 🔍 Filtros Avanzados
-
-### Filtrar por título
-```bash
-curl "http://localhost:5130/api/events?title=conferencia"
-```
-
-### Filtrar por ubicación
-```bash
-curl "http://localhost:5130/api/events?location=centro"
-```
-
-### Filtrar por rango de fechas
-```bash
-curl "http://localhost:5130/api/events?dateFrom=2025-07-01&dateTo=2025-07-31"
-```
-
-### Combinar filtros
-```bash
-curl "http://localhost:5130/api/events?title=tecnología&location=convenciones&dateFrom=2025-07-01"
-```
-
-## 🚀 Desarrollo
-
-### Estructura del Proyecto
-```
-EventPlatform.API/
-├── Controllers/
-│   └── EventsController.cs      # Controlador principal
-├── Data/
-│   └── ApplicationDbContext.cs  # Contexto de Entity Framework
-├── Models/
-│   └── Event.cs                 # Modelo de datos
-├── Program.cs                   # Configuración de la aplicación
-└── appsettings.json            # Configuración de conexión
-```
-
-### Tecnologías Utilizadas
-- **.NET 9.0** - Framework de desarrollo
-- **Entity Framework Core** - ORM para base de datos
-- **MySQL** - Base de datos
-- **Swagger/OpenAPI** - Documentación de API
-- **ASP.NET Core** - Framework web
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
-
-## 📞 Soporte
-
-- **Email:** dev@eventplatform.com
-- **Documentación:** http://localhost:5130/swagger
-- **Issues:** [GitHub Issues](https://github.com/your-repo/issues)
+This project is licensed under the MIT License.
 
 ---
 
-¡Disfruta usando la Event Platform API! 🎉 
+**Built with ❤️ using .NET 9** 

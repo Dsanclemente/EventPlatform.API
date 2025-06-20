@@ -158,3 +158,4 @@
 /Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/dsanclemente/Documents/Personal/prueba/EventPlatform.API/EventPlatform.API/obj/Debug/net9.0/EventPlatform.API.sourcelink.json

@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: eventplatform-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: eventplatform
+      MYSQL_USER: eventuser
+      MYSQL_PASSWORD: eventpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - eventplatform-network
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: EventPlatform.API/Dockerfile
+    container_name: eventplatform-backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=eventplatform;User=eventuser;Password=eventpassword;
+    ports:
+      - "5130:80"
+    depends_on:
+      - mysql
+    networks:
+      - eventplatform-network
+    restart: unless-stopped
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./EventPlatform.Frontend
+      dockerfile: Dockerfile
+    container_name: eventplatform-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - eventplatform-network
+    restart: unless-stopped
+
+  # Redis (for future caching)
+  redis:
+    image: redis:7-alpine
+    container_name: eventplatform-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - eventplatform-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  eventplatform-network:
+    driver: bridge 
